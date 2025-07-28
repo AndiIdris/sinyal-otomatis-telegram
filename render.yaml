@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: sinyal-otomatis-telegram
+    env: python
+    plan: free
+    region: singapore
+    branch: main
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python main.py"
+    autoDeploy: true
