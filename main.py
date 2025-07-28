@@ -1,20 +1,13 @@
-import telegram
-import time
+import os
+import requests
 
-TOKEN = "7247120688:AAHcEK1PP-stPq6YxgufILaSsI_ctasMwYc"
-CHAT_IDS = ["@bam824", "@Clayfoor1789"]
+TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+USERNAMES = os.getenv("TELEGRAM_USERNAMES").split(",")
 
-bot = telegram.Bot(token=TOKEN)
+def send_message(message):
+    for username in USERNAMES:
+        url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+        payload = {"chat_id": f"@{username.strip()}", "text": message}
+        requests.post(url, data=payload)
 
-def kirim_sinyal(pesan):
-    for chat_id in CHAT_IDS:
-        try:
-            bot.send_message(chat_id=chat_id, text=pesan)
-        except Exception as e:
-            print(f"Gagal kirim ke {chat_id}: {e}")
-
-if __name__ == "__main__":
-    pesan = "🚨 [SINYAL PENTING] 1000CAT/IDR breakout kuat! Timeframe 15m 🚀"
-    while True:
-        kirim_sinyal(pesan)
-        time.sleep(900)  # setiap 15 menit
+send_message("🚨 [SINYAL KUAT] SLP/IDR breakout! Potensi naik besar! 🎯")
